@@ -1,31 +1,54 @@
-#include <iostream>
+#include <string>
 #include <vector>
 
+#ifndef QUIZ_H
+#define QUIZ_H
+
+
+
 /*
-* header file for Quiz class, sub classes TextQuestion, MultipleChoiceQuestion, TrueFalseQuestion, 
+* header file for Question class, sub classes TextQuestion, MultipleChoiceQuestion, TrueFalseQuestion, 
 * which manages quiz behaviors and answers
 * Owyn Lee, Anakin Schneider
 */
 
-//have not fully finished this yet, but I will add more to it later. I just wanted to get the basic structure down for now.
+
+/**
+ * So for the quiz system, we will use a vector of Question pointers to 
+ * store the quiz questions, and each question will be an instance of a subclass of Question 
+ * (TextQuestion, MultipleChoiceQuestion, TrueFalseQuestion). This way each 
+ * question can have its own implementation of the checkAnswer function, which will allow us to
+ * handle different types of questions in a flexible way. The Question class will have a virtual
+ * checkAnswer function that will be overridden by each subclass to check the answer based on the question
+ * type. The quiz system will then iterate through the vector of Question pointers, display each question,
+ */
 
 
 
 
 
-// Header file for Quiz class, which manages quiz questions and answers
-class Quiz {
+
+
+// Header file for Question class, which manages quiz questions and answers
+class Question {
 public:
-    Quiz();
+    Question();
+
+    //virtual check answer function, which will be overridden 
+    //by the subclasses to check the answer based on the question type
+    virtual bool checkAnswer(std::string input) = 0;
+
+    virtual void displayQuestion();
 
      
 
 private:
     //store value
+    std::string questionText;
 };
 
-//class TextQuestion : public Quiz 
-class TextQuestion : public Quiz {
+//class TextQuestion : public Question
+class TextQuestion : public Question {
 public:
     TextQuestion();
 
@@ -38,8 +61,8 @@ private:
 
 
 
-//class MultipleChoiceQuestion : public Quiz
-class MultipleChoiceQuestion : public Quiz {
+//class MultipleChoiceQuestion : public Question
+class MultipleChoiceQuestion : public Question {
 public:
     MultipleChoiceQuestion();
 
@@ -53,7 +76,7 @@ private:
 
 
 //True false question class
-class TrueFalseQuestion : public Quiz {
+class TrueFalseQuestion : public Question {
 public:
     TrueFalseQuestion();
 
@@ -62,3 +85,6 @@ private:
 };
 
 
+
+
+#endif
